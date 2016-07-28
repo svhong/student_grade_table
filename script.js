@@ -19,10 +19,11 @@ var student_grade = "";
  */
 function addClicked(){
     var student_object = {};
-    student_name = $('#studentName').val(); //add values inside form into an object
-    course = $('#course').val(); //add values inside form into an object
-    student_grade = $('#studentGrade').val(); //add values inside form into an object
-    student_array = []; //store the object in the student_array global variable
+    student_name = $('#studentName').val();
+    student_object.student_name = $('#studentName').val(); //add values inside form into object
+    student_object.course = $('#course').val(); //add values inside form into object
+    student_object.student_grade = $('#studentGrade').val(); //add values inside form into object
+    student_array.push(student_object); //store the object in the student_array global variable
 
     alert("add button was clicked! student object has :",student_object);
 }
