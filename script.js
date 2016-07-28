@@ -16,11 +16,16 @@ var course;
 var student_grade;
 /**
  * addClicked - Event Handler when user clicks the add button
+ * // 4 things
+ * 1)get the data from the inputs****************************
+ * 2) add the object***************************************
+ * 3)add it to the dom*************************************
+ * 4) clear the form****************************************
  */
 function addClicked(){
     addStudent();
 }
-/**
+/** function called clearInputs maay be needed that should be called by cancelClicked
  * cancelClicked - Event Handler when user clicks the cancel button, should clear out student form
  */
 
@@ -55,6 +60,7 @@ function calculateAverage (){
         total += student_array[i].student_grade; // totals the grades that are already parseFloated  from the addStudent function
     }
     total /= student_array.length; //takes the number of total students input and finds the average
+    console.log("average of the students: ", Math.round(total));
     return Math.round(total); // rounds to the nearest whole number before returning the value
 }
 
