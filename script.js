@@ -5,17 +5,26 @@
  * student_array - global array to hold student objects
  * @type {Array}
  */
-var student_array = [];
+var student_array =[];
+
 /**
  * inputIds - id's of the elements that are used to add students
  * @type {string[]}
  */
-
+var student_name = "";
+var course = "";
+var student_grade = "";
 /**
  * addClicked - Event Handler when user clicks the add button
  */
 function addClicked(){
-    alert("add button was clicked!");
+    var student_object = {};
+    student_name = $('#studentName').val(); //add values inside form into an object
+    course = $('#course').val(); //add values inside form into an object
+    student_grade = $('#studentGrade').val(); //add values inside form into an object
+    student_array = []; //store the object in the student_array global variable
+
+    alert("add button was clicked! student object has :",student_object);
 }
 /**
  * cancelClicked - Event Handler when user clicks the cancel button, should clear out student form
