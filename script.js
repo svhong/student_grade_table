@@ -11,9 +11,9 @@ var student_array =[];
  * inputIds - id's of the elements that are used to add students
  * @type {string[]}
  */
-var student_name = "";
-var course = "";
-var student_grade = "";
+var student_name;
+var course;
+var student_grade;
 /**
  * addClicked - Event Handler when user clicks the add button
  */
@@ -33,13 +33,13 @@ function addStudent(){
     var student_object = {};
     student_name = $('#studentName').val();
     course = $('#course').val();
-    student_grade = $('#studentGrade').val();
+    student_grade = parseFloat($('#studentGrade').val());
     student_object.student_name = student_name; //add values inside form into object
     student_object.course = course; //add values inside form into object
     student_object.student_grade = student_grade; //add values inside form into object
     student_array.push(student_object); //store the object in the student_array global variable
 
-    console.log("student object has :",student_object);
+    console.log("student arry has :",student_array);
 }
 /**
  * clearAddStudentForm - clears out the form values based on inputIds variable
