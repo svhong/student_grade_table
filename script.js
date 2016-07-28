@@ -5,7 +5,7 @@
  * student_array - global array to hold student objects
  * @type {Array}
  */
-
+var student_array = [];
 /**
  * inputIds - id's of the elements that are used to add students
  * @type {string[]}
@@ -14,7 +14,9 @@
 /**
  * addClicked - Event Handler when user clicks the add button
  */
-
+function addClicked(){
+    alert("add button was clicked!");
+}
 /**
  * cancelClicked - Event Handler when user clicks the cancel button, should clear out student form
  */
@@ -56,3 +58,9 @@
 /**
  * Listen for the document to load and reset the data to the initial state
  */
+$(document).ready(function(){
+    // assign add button click handler
+    $('#add_button').click(function (){
+        addClicked();
+    });
+})
