@@ -45,6 +45,12 @@ function addClicked(){
  * calculateAverage - loop through the global student array and calculate average grade and return that value
  * @returns {number}
  */
+function calculateAverage (){
+    var average = [];
+    for (var i = 0; i < student_array.length-1; i++){
+        average.push(student_object[i].student_grade)
+    }
+}
 
 /**
  * updateData - centralized function to update the average and call student list update
@@ -63,7 +69,14 @@ function addClicked(){
 /**
  * reset - resets the application to initial state. Global variables reset, DOM get reset to initial load state
  */
-
+function reset(){
+    //reset global variables back to default value, and reset the dom back to initial load state
+    var student_array =[];
+    var student_name = "";
+    var course = "";
+    var student_grade = "";
+    console.log ('the reset function is working correctly', student_array, student_name,student_grade,course);
+}
 
 /**
  * Listen for the document to load and reset the data to the initial state
@@ -72,5 +85,6 @@ $(document).ready(function(){
     // assign add button click handler
     $('#add_button').click(function (){
         addClicked();
+        reset(); // resets the tables and global variables back to original value(empty)
     });
 })
