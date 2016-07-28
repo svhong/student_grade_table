@@ -50,15 +50,20 @@ function addStudent(){
  * @returns {number}
  */
 function calculateAverage (){
-    var average = [];
-    for (var i = 0; i < student_array.length-1; i++){
-        average.push(student_object[i].student_grade)
+    var total = 0;
+    for (var i = 0; i <= student_array.length-1; i++){ //function loop to go through the global array and pull the grades
+        total += student_array[i].student_grade; // totals the grades that are already parseFloated  from the addStudent function
     }
+    total /= student_array.length; //takes the number of total students input and finds the average
+    return Math.round(total); // rounds to the nearest whole number before returning the value
 }
 
 /**
  * updateData - centralized function to update the average and call student list update
  */
+function updateData(){
+    $('.avgGrade').append(calculateAverage()); // updates the .avgGrade label to the DOM with the average.
+}
 
 /**
  * updateStudentList - loops through global student array and appends each objects data into the student-list-container > list-body
@@ -89,6 +94,6 @@ $(document).ready(function(){
     // assign add button click handler
     $('#add_button').click(function (){
         addClicked();
-        reset(); // resets the tables and global variables back to original value(empty)
     });
-})
+    reset(); // resets the tables and global variables back to original value(empty)
+});
