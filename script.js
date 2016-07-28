@@ -44,6 +44,8 @@ function addStudent(){
     student_object.course = course; //add values inside form into object
     student_object.student_grade = student_grade; //add values inside form into object
     student_array.push(student_object); //store the object in the student_array global variable
+    addStudentToDom();
+    updateData();
     clearAddStudentForm();
 
     console.log("student array has :",student_array);
@@ -76,7 +78,7 @@ function calculateAverage (){
  * updateData - centralized function to update the average and call student list update
  */
 function updateData(){
-    $('.avgGrade').append(calculateAverage()); // updates the .avgGrade label to the DOM with the average.
+    $('.avgGrade').html(calculateAverage()); // updates the .avgGrade label to the DOM with the average.
 }
 
 /**
@@ -88,6 +90,16 @@ function updateData(){
  * into the .student_list tbody
  * @param studentObj
  */
+function addStudentToDom(){ //****MIGHT NEED TO EDIT INTO PARAMETERS AND NOT RELY ON THE GLOBALS*******
+    var student_nameTD = $('<td>').html(student_name) ;
+    var courseTD = $('<td>').html(course);
+    var student_gradeTD = $('<td>').html(student_grade);
+    var del = $('<button>').addClass('btn btn-danger btn-xs').text('Delete');
+    var deleteTD = $('<td>').html(del);
+    var tr = $('<tr>');
+    tr.append(student_nameTD,courseTD,student_gradeTD,deleteTD);
+    $('.studentTB').append(tr);
+}
 
 /**
  * reset - resets the application to initial state. Global variables reset, DOM get reset to initial load state
