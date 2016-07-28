@@ -18,7 +18,7 @@ var student_grade;
  */
 function addClicked(){
     addStudent();
-    addStudentToDom();
+    //addStudentToDom();
     clearAddStudentForm();
 }
 /**
@@ -50,6 +50,8 @@ function addStudent(){
  */
 function clearAddStudentForm(){
     $('#studentName').val("");
+    $('#course').val("");
+    $('#studentGrade').val("");
 }
 /**
  * calculateAverage - loop through the global student array and calculate average grade and return that value
