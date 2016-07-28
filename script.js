@@ -18,14 +18,7 @@ var student_grade = "";
  * addClicked - Event Handler when user clicks the add button
  */
 function addClicked(){
-    var student_object = {};
-    student_name = $('#studentName').val();
-    student_object.student_name = $('#studentName').val(); //add values inside form into object
-    student_object.course = $('#course').val(); //add values inside form into object
-    student_object.student_grade = $('#studentGrade').val(); //add values inside form into object
-    student_array.push(student_object); //store the object in the student_array global variable
-
-    alert("add button was clicked! student object has :",student_object);
+    addStudent();
 }
 /**
  * cancelClicked - Event Handler when user clicks the cancel button, should clear out student form
@@ -36,7 +29,18 @@ function addClicked(){
  *
  * @return undefined
  */
+function addStudent(){
+    var student_object = {};
+    student_name = $('#studentName').val();
+    course = $('#course').val();
+    student_grade = $('#studentGrade').val();
+    student_object.student_name = student_name; //add values inside form into object
+    student_object.course = course; //add values inside form into object
+    student_object.student_grade = student_grade; //add values inside form into object
+    student_array.push(student_object); //store the object in the student_array global variable
 
+    console.log("student object has :",student_object);
+}
 /**
  * clearAddStudentForm - clears out the form values based on inputIds variable
  */
