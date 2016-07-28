@@ -109,5 +109,8 @@ $(document).ready(function(){
     $('#add_button').click(function (){
         addClicked();
     });
+    $('#cancel_button').click(function (){
+        clearAddStudentForm();
+    });
     reset(); // resets the tables and global variables back to original value(empty)
 });
