@@ -105,7 +105,7 @@ function reset(){
  * Listen for the document to load and reset the data to the initial state
  */
 $(document).ready(function(){
-    // assign add button click handler
+    // assign add/cancel button click handlers
     $('#add_button').click(function (){
         addClicked();
     });
