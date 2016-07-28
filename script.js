@@ -6,7 +6,6 @@
  * @type {Array}
  */
 var student_array =[];
-
 /**
  * inputIds - id's of the elements that are used to add students
  * @type {string[]}
@@ -19,6 +18,8 @@ var student_grade;
  */
 function addClicked(){
     addStudent();
+    addStudentToDom();
+    clearAddStudentForm();
 }
 /**
  * cancelClicked - Event Handler when user clicks the cancel button, should clear out student form
@@ -38,13 +39,18 @@ function addStudent(){
     student_object.course = course; //add values inside form into object
     student_object.student_grade = student_grade; //add values inside form into object
     student_array.push(student_object); //store the object in the student_array global variable
+    clearAddStudentForm();
 
-    console.log("student arry has :",student_array);
+    console.log("student array has :",student_array);
+
+    return undefined;
 }
 /**
  * clearAddStudentForm - clears out the form values based on inputIds variable
  */
-
+function clearAddStudentForm(){
+    $('#studentName').val("");
+}
 /**
  * calculateAverage - loop through the global student array and calculate average grade and return that value
  * @returns {number}
