@@ -49,10 +49,21 @@ function addStudent(){
  * calculateAverage - loop through the global student array and calculate average grade and return that value
  * @returns {number}
  */
+function calculateAverage (){
+    var total = 0;
+    for (var i = 0; i <= student_array.length-1; i++){ //function loop to go through the global array and pull the grades
+        total += student_array[i].student_grade; // totals the grades that are already parseFloated  from the addStudent function
+    }
+    total /= student_array.length; //takes the number of total students input and finds the average
+    return Math.round(total); // rounds to the nearest whole number before returning the value
+}
 
 /**
  * updateData - centralized function to update the average and call student list update
  */
+function updateData(){
+    $('.avgGrade').append(calculateAverage()); // updates the .avgGrade label to the DOM with the average.
+}
 
 /**
  * updateStudentList - loops through global student array and appends each objects data into the student-list-container > list-body
@@ -67,7 +78,14 @@ function addStudent(){
 /**
  * reset - resets the application to initial state. Global variables reset, DOM get reset to initial load state
  */
-
+function reset(){
+    //reset global variables back to default value, and reset the dom back to initial load state
+    var student_array =[];
+    var student_name = "";
+    var course = "";
+    var student_grade = "";
+    console.log ('the reset function is working correctly', student_array, student_name,student_grade,course);
+}
 
 /**
  * Listen for the document to load and reset the data to the initial state
@@ -77,4 +95,5 @@ $(document).ready(function(){
     $('#add_button').click(function (){
         addClicked();
     });
-})
+    reset(); // resets the tables and global variables back to original value(empty)
+});
