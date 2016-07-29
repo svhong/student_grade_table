@@ -59,7 +59,9 @@ function addStudent(){
     return undefined;
 }
 function removeStudent(button){
+    var remove = $(button).closest('tr').index();
     $(button).closest('tr').remove();
+    student_array.splice(remove,1);
 
 }
 /**
