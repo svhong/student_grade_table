@@ -136,6 +136,9 @@ $(document).ready(function(){
     $('#cancel_button').click(function (){
         clearAddStudentForm();
     });
+    $('#get_data_from_server_button').click(function (){
+        clearAddStudentForm();
+    });
     $('#studentGrade').on('keypress',enter_keypress);
     reset(); // resets the tables and global variables back to original value(empty)
 });
