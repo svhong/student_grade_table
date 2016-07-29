@@ -26,6 +26,12 @@ function addClicked(){
     //addStudentToDom();
     clearAddStudentForm();
 }
+/*-------------------------ADDING FUNCTION TO ENABLE THE ENTER KEY PRESS-----------------------------*/
+function enter_keypress(e){
+    if (e.which == '13'){
+        addStudent();
+    }
+}
 /** function called clearInputs maay be needed that should be called by cancelClicked
  * cancelClicked - Event Handler when user clicks the cancel button, should clear out student form
  */
@@ -124,5 +130,6 @@ $(document).ready(function(){
     $('#cancel_button').click(function (){
         clearAddStudentForm();
     });
+    $('#studentGrade').on('keypress',enter_keypress);
     reset(); // resets the tables and global variables back to original value(empty)
 });
