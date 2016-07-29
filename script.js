@@ -145,7 +145,7 @@ function send_student_data(student_object) {
     });
 }
 
-// send student data
+// get student data
 function get_student_data() {
     // var key = {'api_key': 'lN3gVYfP6x'};
     $.ajax({
@@ -157,8 +157,9 @@ function get_student_data() {
         },
         success: function(result) {
             console.log('AJAX Success function called, with the following result:', result);
-            for (i=0; i < data.length; i++) {
-                // function
+            for (i=0; i < result.length; i++) {
+                addStudent(result[i]);
+                addStudentToDom(result[i]);
             }
         }
     });
