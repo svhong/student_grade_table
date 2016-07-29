@@ -20,11 +20,14 @@ var student_array =[];
  * 4) clear the form****************************************
  */
 function addClicked(){
+    //make sure form isn't empty
     var student_object = {};
     student_object.student_name = $('#studentName').val();
     student_object.course = $('#course').val();
     student_object.student_grade = parseFloat($('#studentGrade').val());
+    send_student_data(student_object);
     addStudent(student_object);
+    addStudentToDom(student_object);
     clearAddStudentForm();
 }
 /*-------------------------ADDING FUNCTION TO ENABLE THE ENTER KEY PRESS-----------------------------*/
@@ -44,8 +47,8 @@ function enter_keypress(e){
  */
 function addStudent(student_object){
     student_array.push(student_object); //store the object in the student_array global variable
-    addStudentToDom(student_object);
-    updateData();
+    // addStudentToDom(student_object);
+    updateData(); //average
     console.log("student array has :",student_array);
 }
 function removeStudent(button){
@@ -120,6 +123,48 @@ function reset(){
     console.log ('the reset function is working correctly', student_array, student_name,student_grade,course);
 }
 
+// send student data
+function send_student_data(student_object) {
+    // var key = {'api_key': 'lN3gVYfP6x'};
+    $.ajax({
+        dataType: 'json',
+        method: 'post',
+        url: 'http://s-apis.learningfuze.com/sgt/create',
+        data: {
+            'api_key': 'lN3gVYfP6x',
+            'name' : student_object.student_name,
+            'course' : student_object.course,
+            'grade' : student_object.student_grade
+        },
+        success: function(result) {
+            console.log('AJAX Success function called, with the following result:', result);
+            global_result = result;
+            console.log('server student id is: ' + result.new_id);
+            student_object.id = result.new_id;
+        }
+    });
+}
+
+// send student data
+function get_student_data() {
+    // var key = {'api_key': 'lN3gVYfP6x'};
+    $.ajax({
+        dataType: 'json',
+        method: 'post',
+        url: 'http://s-apis.learningfuze.com/sgt/get',
+        data: {
+            'api_key': 'lN3gVYfP6x',
+        },
+        success: function(result) {
+            console.log('AJAX Success function called, with the following result:', result);
+            for (i=0; i < data.length; i++) {
+                // function
+            }
+        }
+    });
+}
+
+
 /**
  * Listen for the document to load and reset the data to the initial state
  */
@@ -132,7 +177,6 @@ $(document).ready(function(){
         clearAddStudentForm();
     });
     $('#get_data_from_server_button').click(function (){
-
         clearAddStudentForm();
     });
     $('#studentGrade').on('keypress',enter_keypress);
