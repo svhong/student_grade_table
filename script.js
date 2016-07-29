@@ -10,9 +10,7 @@ var student_array =[];
  * inputIds - id's of the elements that are used to add students
  * @type {string[]}
  */
-var student_name;
-var course;
-var student_grade;
+// var inputIds = [];
 /**
  * addClicked - Event Handler when user clicks the add button
  * // 4 things
@@ -22,14 +20,17 @@ var student_grade;
  * 4) clear the form****************************************
  */
 function addClicked(){
-    addStudent();
-    //addStudentToDom();
+    var student_object = {};
+    student_object.student_name = $('#studentName').val();
+    student_object.course = $('#course').val();
+    student_object.student_grade = parseFloat($('#studentGrade').val());
+    addStudent(student_object);
     clearAddStudentForm();
 }
 /*-------------------------ADDING FUNCTION TO ENABLE THE ENTER KEY PRESS-----------------------------*/
 function enter_keypress(e){
     if (e.which == '13'){
-        addStudent();
+        addClicked();
     }
 }
 /** function called clearInputs maay be needed that should be called by cancelClicked
@@ -41,22 +42,11 @@ function enter_keypress(e){
  *
  * @return undefined
  */
-function addStudent(){
-    var student_object = {};
-    student_name = $('#studentName').val();
-    course = $('#course').val();
-    student_grade = parseFloat($('#studentGrade').val());
-    student_object.student_name = student_name; //add values inside form into object
-    student_object.course = course; //add values inside form into object
-    student_object.student_grade = student_grade; //add values inside form into object
+function addStudent(student_object){
     student_array.push(student_object); //store the object in the student_array global variable
-    addStudentToDom();
+    addStudentToDom(student_object);
     updateData();
-    clearAddStudentForm();
-
     console.log("student array has :",student_array);
-
-    return undefined;
 }
 function removeStudent(button){
     var remove = $(button).closest('tr').index();
@@ -94,18 +84,23 @@ function updateData(){
 }
 
 /**
- * updateStudentList - loops through global student array and appends each objects data into the student-list-container > list-body
+ * udpends each objects data into the student-list-container > list-body
  */
+function updateStudentList(){
+    for(var i = 0; i <student_array-1; i++){
+        addStudentToDom(student_array[i]);
+    }
+}
 
 /**
  * addStudentToDom - take in a student object, create html elements from the values and then append the elements
  * into the .student_list tbody
  * @param studentObj
  */
-function addStudentToDom(){ //****MIGHT NEED TO EDIT INTO PARAMETERS AND NOT RELY ON THE GLOBALS*******
-    var student_nameTD = $('<td>').html(student_name) ;
-    var courseTD = $('<td>').html(course);
-    var student_gradeTD = $('<td>').html(student_grade);
+function addStudentToDom(student_object){ //****MIGHT NEED TO EDIT INTO PARAMETERS AND NOT RELY ON THE GLOBALS*******
+    var student_nameTD = $('<td>').html(student_object.student_name);
+    var courseTD = $('<td>').html(student_object.course);
+    var student_gradeTD = $('<td>').html(student_object.student_grade);
     var del = $('<button>').addClass('btn btn-danger btn-xs').text('Delete').click(function(){removeStudent(this);});
     var deleteTD = $('<td>').html(del);
     var tr = $('<tr>').addClass('parentRow');
@@ -137,6 +132,7 @@ $(document).ready(function(){
         clearAddStudentForm();
     });
     $('#get_data_from_server_button').click(function (){
+
         clearAddStudentForm();
     });
     $('#studentGrade').on('keypress',enter_keypress);
