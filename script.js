@@ -58,6 +58,10 @@ function addStudent(){
 
     return undefined;
 }
+function removeStudent(button){
+    $(button).closest('tr').remove();
+
+}
 /**
  * clearAddStudentForm - clears out the form values based on inputIds variable
  */
@@ -100,9 +104,9 @@ function addStudentToDom(){ //****MIGHT NEED TO EDIT INTO PARAMETERS AND NOT REL
     var student_nameTD = $('<td>').html(student_name) ;
     var courseTD = $('<td>').html(course);
     var student_gradeTD = $('<td>').html(student_grade);
-    var del = $('<button>').addClass('btn btn-danger btn-xs').text('Delete');
+    var del = $('<button>').addClass('btn btn-danger btn-xs').text('Delete').click(function(){removeStudent(this);});
     var deleteTD = $('<td>').html(del);
-    var tr = $('<tr>');
+    var tr = $('<tr>').addClass('parentRow');
     tr.append(student_nameTD,courseTD,student_gradeTD,deleteTD);
     $('.studentTB').append(tr);
 }
