@@ -22,9 +22,9 @@ var student_array =[];
 function addClicked(){
     //make sure form isn't empty
     var student_object = {};
-    student_object.student_name = $('#studentName').val();
+    student_object.name = $('#studentName').val();
     student_object.course = $('#course').val();
-    student_object.student_grade = parseFloat($('#studentGrade').val());
+    student_object.grade = parseFloat($('#studentGrade').val());
     send_student_data(student_object);
     addStudent(student_object);
     addStudentToDom(student_object);
@@ -72,7 +72,7 @@ function clearAddStudentForm(){
 function calculateAverage (){
     var total = 0;
     for (var i = 0; i <= student_array.length-1; i++){ //function loop to go through the global array and pull the grades
-        total += student_array[i].student_grade; // totals the grades that are already parseFloated  from the addStudent function
+        total += student_array[i].grade; // totals the grades that are already parseFloated  from the addStudent function
     }
     total /= student_array.length; //takes the number of total students input and finds the average
     console.log("average of the students: ", Math.round(total));
@@ -101,9 +101,9 @@ function updateStudentList(){
  * @param studentObj
  */
 function addStudentToDom(student_object){ //****MIGHT NEED TO EDIT INTO PARAMETERS AND NOT RELY ON THE GLOBALS*******
-    var student_nameTD = $('<td>').html(student_object.student_name);
+    var student_nameTD = $('<td>').html(student_object.name);
     var courseTD = $('<td>').html(student_object.course);
-    var student_gradeTD = $('<td>').html(student_object.student_grade);
+    var student_gradeTD = $('<td>').html(student_object.grade);
     var del = $('<button>').addClass('btn btn-danger btn-xs').text('Delete').click(function(){removeStudent(this);});
     var deleteTD = $('<td>').html(del);
     var tr = $('<tr>').addClass('parentRow');
@@ -132,9 +132,9 @@ function send_student_data(student_object) {
         url: 'http://s-apis.learningfuze.com/sgt/create',
         data: {
             'api_key': 'lN3gVYfP6x',
-            'name' : student_object.student_name,
+            'name' : student_object.name,
             'course' : student_object.course,
-            'grade' : student_object.student_grade
+            'grade' : student_object.grade
         },
         success: function(result) {
             console.log('AJAX Success function called, with the following result:', result);
@@ -157,9 +157,9 @@ function get_student_data() {
         },
         success: function(result) {
             console.log('AJAX Success function called, with the following result:', result);
-            for (i=0; i < result.length; i++) {
-                addStudent(result[i]);
-                addStudentToDom(result[i]);
+            for (i=0; i < result.data.length; i++) {
+                addStudent(result.data[i]);
+                addStudentToDom(result.data[i]);
             }
         }
     });
