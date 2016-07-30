@@ -54,8 +54,8 @@ function addStudent(student_object){
 function removeStudent(button){
     var remove = $(button).closest('tr').index();
     $(button).closest('tr').remove();
+    delete_student_data(student_array[remove].id);
     student_array.splice(remove,1);
-
 }
 /**
  * clearAddStudentForm - clears out the form values based on inputIds variable
@@ -165,6 +165,25 @@ function get_student_data() {
     });
 }
 
+// delete student data
+function delete_student_data(student_id) {
+    // var key = {'api_key': 'lN3gVYfP6x'};
+    $.ajax({
+        dataType: 'json',
+        method: 'post',
+        url: 'http://s-apis.learningfuze.com/sgt/delete',
+        data: {
+            'api_key': 'lN3gVYfP6x',
+            'student_id' : student_id
+        },
+        success: function(result) {
+            console.log('AJAX Success function called, with the following result:', result);
+            global_result = result;
+            // console.log('server student id is: ' + result.new_id);
+            // student_object.id = result.new_id;
+        }
+    });
+}
 
 /**
  * Listen for the document to load and reset the data to the initial state
