@@ -1,6 +1,7 @@
 /**
  * Define all global variables here
  */
+var disabler = false;
 /**
  * student_array - global array to hold student objects
  * @type {Array}
@@ -116,11 +117,8 @@ function addStudentToDom(student_object){ //****MIGHT NEED TO EDIT INTO PARAMETE
  */
 function reset(){
     //reset global variables back to default value, and reset the dom back to initial load state
-    var student_array =[];
-    var student_name = "";
-    var course = "";
-    var student_grade = "";
-    console.log ('the reset function is working correctly', student_array, student_name,student_grade,course);
+    student_array =[];
+    disabler = false;
 }
 
 // send student data
@@ -156,6 +154,7 @@ function get_student_data() {
             'api_key': 'lN3gVYfP6x'
         },
         success: function(result) {
+            disabler = true;
             console.log('AJAX Success function called, with the following result:', result);
             for (i=0; i < result.data.length; i++) {
                 addStudent(result.data[i]);
@@ -197,8 +196,9 @@ $(document).ready(function(){
         clearAddStudentForm();
     });
     $('#get_data_from_server_button').click(function (){
-        get_student_data();
-        clearAddStudentForm();
+        if (disabler == false) {
+            get_student_data();
+        }
     });
     $('#studentGrade').on('keypress',enter_keypress);
     reset(); // resets the tables and global variables back to original value(empty)
