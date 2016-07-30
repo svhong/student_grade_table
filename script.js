@@ -1,7 +1,7 @@
 /**
  * Define all global variables here
  */
-var disabler = false;
+var disabler = true;
 /**
  * student_array - global array to hold student objects
  * @type {Array}
@@ -201,5 +201,5 @@ $(document).ready(function(){
         }
     });
     $('#studentGrade').on('keypress',enter_keypress);
-    reset(); // resets the tables and global variables back to original value(empty)
+    get_student_data();
 });
