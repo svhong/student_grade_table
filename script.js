@@ -90,7 +90,7 @@ function updateData(){
  * udpends each objects data into the student-list-container > list-body
  */
 function updateStudentList(){
-    for(var i = 0; i <student_array-1; i++){
+    for(var i = 0; i <student_array.length-1; i++){
         addStudentToDom(student_array[i]);
     }
 }
@@ -153,14 +153,14 @@ function get_student_data() {
         method: 'post',
         url: 'http://s-apis.learningfuze.com/sgt/get',
         data: {
-            'api_key': 'lN3gVYfP6x',
+            'api_key': 'lN3gVYfP6x'
         },
         success: function(result) {
             console.log('AJAX Success function called, with the following result:', result);
             for (i=0; i < result.data.length; i++) {
                 addStudent(result.data[i]);
-                addStudentToDom(result.data[i]);
             }
+            updateStudentList();
         }
     });
 }
@@ -178,6 +178,7 @@ $(document).ready(function(){
         clearAddStudentForm();
     });
     $('#get_data_from_server_button').click(function (){
+        get_student_data();
         clearAddStudentForm();
     });
     $('#studentGrade').on('keypress',enter_keypress);
