@@ -6,6 +6,10 @@
  * @type {Array}
  */
 var student_array =[];
+var modal = {
+    'backdrop': 'true',
+    'keyboard': 'true'
+};
 /**
  * inputIds - id's of the elements that are used to add students
  * @type {string[]}
@@ -138,10 +142,15 @@ function send_student_data(student_object) {
             global_result = result;
             console.log('server student id is: ' + result.new_id);
             student_object.id = result.new_id;
+            display_error(result);
         }
     });
 }
-
+function display_error(result){
+    if (result){
+        $('#errorModal').modal('show');
+    }
+}
 // get student data
 function get_student_data() {
     // var key = {'api_key': 'lN3gVYfP6x'};
@@ -197,6 +206,7 @@ $(document).ready(function(){
         reset();
         get_student_data();
     });
+    $('#studentName').attr('pattern', '[A-Za-z]');
     $('#studentGrade').on('keypress',enter_keypress);
     get_student_data();
 });
