@@ -12,11 +12,13 @@
     <div class="page-header">
         <!-- only show this element when the isnt on mobile -->
         <h1 class="hidden-xs hidden-sm">Student Grade Table
-            <small class="col-md-3 pull-right">Grade Average : <span class="avgGrade label label-default "></span></small>
+            <small class="col-md-3 pull-right">Grade Average : <span class="avgGrade label label-default "></span>
+            </small>
         </h1>
         <!-- only show this element when the user gets to a mobile version -->
-        <h3 class = "hidden-md hidden-lg"><strong>Student Grade Table</strong>
-            <small class="col-sm-2 pull-right">Grade Average : <span class="avgGrade label label-default "></span></small>
+        <h3 class="hidden-md hidden-lg"><strong>Student Grade Table</strong>
+            <small class="col-sm-2 pull-right">Grade Average : <span class="avgGrade label label-default "></span>
+            </small>
         </h3>
     </div>
     <div class="student-add-form col-sm-12 col-md-3 pull-right">
@@ -58,6 +60,21 @@
             <tbody class="studentTB">
             </tbody>
         </table>
+    </div>
+    <div id="errorModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p class="modal-title">ERROR!</p>
+                </div>
+                <div class="modal-body">
+                    <p id="modal_message"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </body>
