@@ -231,7 +231,7 @@ $(document).ready(function () {
         reset();
         get_student_data();
     });
-    // $('#studentName').attr('pattern', '[A-Za-z]');
-    $('#studentGrade').on('keypress', enter_keypress);
+    $('#studentName').attr('pattern', '[A-Za-z]');
+    $('#studentGrade').on('keypress',enter_keypress);
     get_student_data();
 });
