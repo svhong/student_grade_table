@@ -27,7 +27,7 @@ function addClicked() {
     //make sure form isn't empty
     if (check_input_fields() == true) return;
     var student_object = {};
-    student_object.name = $('#studentName').val()
+    student_object.name = $('#studentName').val();
     student_object.course = $('#course').val();
     student_object.grade = parseFloat($('#studentGrade').val());
     send_student_data(student_object);
