@@ -132,7 +132,7 @@
             var data = {
                 method: 'post',
                 url: 'http://s-apis.learningfuze.com/sgt/create',
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+//                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                 data: $.param({
                     'api_key': 'lN3gVYfP6x',
                     'name': self.student_array[self.student_array.length - 1].name,
@@ -180,9 +180,9 @@
             var data = {
                 method: 'post',
                 url: 'http://s-apis.learningfuze.com/sgt/get',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
+//                headers: {
+//                    'Content-Type': 'application/x-www-form-urlencoded'
+//                },
                 data: $.param({'api_key': 'lN3gVYfP6x'})
             };
             $http(data).then(function success(response) {
@@ -225,7 +225,7 @@
           var data = {
                 method: 'post',
                 url: 'http://s-apis.learningfuze.com/sgt/delete',
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+//                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                 data: $.param({'api_key': 'lN3gVYfP6x',
                     'student_id': self.student_array[student_id].id})
           };
@@ -253,6 +253,9 @@
 //        };
         this.get_student_data();
     });
+app.config(function($httpProvider){
+    $httpProvider.defaults.headers.post = {'Content-Type': 'application/x-www-form-urlencoded'};
+})
 </script>
 </body>
 </html>
