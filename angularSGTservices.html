@@ -95,7 +95,7 @@
 </div>
 <script>
     var app = angular.module('sgt_app', []);
-    app.controller('studentController', function ($scope, $http,getHttp) {
+    app.controller('studentController', function ($scope, $http, getHttp) {
         var self = this;
         self.student = {};
         self.student_array = [];
@@ -158,13 +158,7 @@
                 console.error('its NOT WORKING')
             }).catch(function(){
                 console.error('FAILURE')
-            })
-
-
-//              getHttp.changeUrl('http://s-apis.learningfuze.com/sgt/get');
-//              getHttp.datadatadata($.param({'api_key': 'lN3gVYfP6x'}));
-//
-
+            });
         };
         this.calculate_average = function () {
             if (this.student_array.length == 0) {
