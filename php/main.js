@@ -6,14 +6,15 @@ function get_data(){
         url: 'database.php',
         method: 'POST',
         dataType: 'json',
-        success: function(response){
-            console.log(response.data);
-            for (var i = 0; i < response.data.length; i++){
+        success: function(response) {
+            var total = 0;
+            for (var i = response.data.length-1; i >= 0; i--) {
                 add_student_to_dom(response.data[i]);
+                total += parseInt(response.data[i]['Grade']);
             }
-
+            show_grade_average(Math.round(total/response.data.length));
         }
-    })
+    });
 }
 /*Function to add student to the server database*/
 function add_student(){
@@ -29,18 +30,46 @@ function add_student(){
         url:'add_student.php',
         method: 'POST',
         data: create_student,
+        dataType: 'json',
         success: function(response){
-            console.log(response)
+            console.log('this is a success message', response);
+            if(response.success){
+                success_message(response.message);
+                clear_add_student_form();
+                get_data();
+            } else {
+                error_message(response.message);
+            }
         }
     });
-    clear_add_student_form();
+}
+/* Function to remove the student from the database*/
+function remove_student(element){
+    var delete_data = {
+        ID: $(element).attr('student_id')
+    };
+    $.ajax({
+        url: 'delete_student.php',
+        method: 'POST',
+        data: delete_data,
+        dataType: 'json',
+        success: function(response){
+            if(response.success){
+                success_message(response.message);
+                $(element).closest('tr').remove();
+                calculate_average();
+            } else {
+                error_message(response.message);
+            }
+        }
+    });
 }
 
 /*function to loop through the received response from database and appends to DOM*/
 function add_student_to_dom(student_object){
     var student_nameTD = $('<td>').html(student_object['Name']);
     var courseTD = $('<td>').html(student_object['Course']);
-    var student_gradeTD = $('<td>').html(student_object['Grade']);
+    var student_gradeTD = $('<td>').addClass('grade').html(student_object['Grade']);
     var del = $('<button>').addClass('btn btn-danger btn-xs').text('Delete').attr({'student_id': student_object['ID']}).click(function () {
         remove_student(this);
     });
@@ -52,15 +81,24 @@ function add_student_to_dom(student_object){
 
 /*Function to check the input fields to ensure criteria met for adding student*/
 function check_input_fields() {
-    var name = $('#student_name').val();
-    var course = $('#course_name').val();
+    var name = $('#student_name').val().replace(/\s+/g, '');
+    var course = $('#course_name').val().replace(/\s+/g, '');
     var grade = parseFloat($('#student_grade').val());
-    if (name == undefined || course == undefined || grade < 0 || grade > 100 || grade == undefined || isNaN(grade) == true) {
+    if (name == '' || course == '' || grade < 0 || grade > 100 || grade == '' || isNaN(grade) == true) {
         var message = 'All input fields must contain at least one non-space character.  Grade must be a number between 0 and 100.';
         display(message);
         return true;
     }
 }
+
+function success_message(message){
+    $(".server_message").css('color','green').text(message);
+}
+
+function error_message(message){
+    $('.server_message').css('color','red').text(message);
+}
+
 function display(message) {
     $('#modal_message').html(message);
     $('#Modal').modal('show');
@@ -76,18 +114,19 @@ function clear_dom(){
     $('.studentTB').children('tr').remove();
 }
 
-function remove_student(element){
-    var delete_data = {
-        ID: $(element).attr('student_id')
-    };
-    $.ajax({
-        url: 'delete_student.php',
-        method: 'POST',
-        data: delete_data,
-        success: function(response){
-            console.log('student successfully deleted', response);
-        }
-
-    });
-    $(element).closest('tr').remove();
+function show_grade_average(grade){
+    $('.average_grade').text(grade);
 }
+
+function calculate_average(){
+    var array = document.getElementsByClassName('grade');
+    var total = 0;
+    for(var i =0; i < array.length; i++){
+        total += parseInt(array[i]['textContent']);
+    }
+    show_grade_average(Math.round(total /= array.length))
+}
+
+$(document).ready(function() {
+    get_data();
+});

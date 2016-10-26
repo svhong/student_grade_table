@@ -12,12 +12,12 @@
     <div class="page-header">
         <!-- only show this element when the isnt on mobile -->
         <h1 class="hidden-xs hidden-sm">Student Grade Table
-            <small class="col-md-3 pull-right">Grade Average : <span class="avgGrade label label-default "></span>
+            <small class="col-md-3 pull-right">Grade Average : <span class="average_grade label label-default ">0</span>
             </small>
         </h1>
         <!-- only show this element when the user gets to a mobile version -->
         <h3 class="hidden-md hidden-lg"><strong>Student Grade Table</strong>
-            <small class="col-sm-2 pull-right">Grade Average : <span class="avgGrade label label-default "></span>
+            <small class="col-sm-2 pull-right">Grade Average : <span class="average_grade label label-default ">0</span>
             </small>
         </h3>
     </div>
@@ -27,7 +27,7 @@
             <span class="input-group-addon">
                 <span class="glyphicon glyphicon-user"></span>
             </span>
-            <input type="text" class="form-control" name="student_name" id="studentName" placeholder="Student Name">
+            <input type="text" class="form-control" name="studentName" id="student_name" placeholder="Student Name">
         </div>
         <div class="form-group input-group">
             <span class="input-group-addon">
@@ -40,12 +40,13 @@
             <span class="input-group-addon">
                 <span class="glyphicon glyphicon-education"></span>
             </span>
-            <input type="text" class="form-control" name="student_grade" id="studentGrade"
+            <input type="text" class="form-control" name="studentGrade" id="student_grade"
                    placeholder="Student Grade">
         </div>
         <button type="button" class="btn btn-success" id="add_button" onclick="add_student()">Add</button>
         <button type="button" class="btn btn-default" id="cancel_button">Cancel</button>
-        <button type="button" class="btn btn-info" id="get_data_from_server_button" onclick="get_data()">Get Data From Server</button>
+        <button type="button" class="btn btn-info" id="get_data_from_server_button" onclick="get_data()">Refresh</button>
+        <div class="server_message"></div>
     </div>
     <div class="student-list-container col-sm-12 col-md-8">
         <table class="student-list table">
@@ -62,7 +63,7 @@
         </table>
     </div>
     <!--Error Modal-->
-    <div id="errorModal" class="modal fade">
+    <div id="Modal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
