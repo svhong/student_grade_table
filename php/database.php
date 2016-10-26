@@ -1,10 +1,13 @@
 <?php
 require_once ('mysqli_connect.php');
-
+$output['success'] = false;
 $query = "SELECT * FROM students";
 $list = mysqli_query($conn, $query);
-while ($row = mysqli_fetch_assoc($list)) {
-    $output['success'][] = $row;
+if(mysqli_num_rows($list)){
+    $output['success'] = true;
+    while ($row = mysqli_fetch_assoc($list)) {
+        $output['data'][] = $row;
+    }
 }
-print_r(json_encode($output));
+print(json_encode($output));
 ?>

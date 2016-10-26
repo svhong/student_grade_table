@@ -27,25 +27,25 @@
             <span class="input-group-addon">
                 <span class="glyphicon glyphicon-user"></span>
             </span>
-            <input type="text" class="form-control" name="studentName" id="studentName" placeholder="Student Name">
+            <input type="text" class="form-control" name="student_name" id="studentName" placeholder="Student Name">
         </div>
         <div class="form-group input-group">
             <span class="input-group-addon">
                 <span class="glyphicon glyphicon-list-alt"></span>
             </span>
-            <input type="text" class="form-control" name="course" id="course"
+            <input type="text" class="form-control" name="course" id="course_name"
                    placeholder="Student Course">
         </div>
         <div class="form-group input-group">
             <span class="input-group-addon">
                 <span class="glyphicon glyphicon-education"></span>
             </span>
-            <input type="text" class="form-control" name="studentGrade" id="studentGrade"
+            <input type="text" class="form-control" name="student_grade" id="studentGrade"
                    placeholder="Student Grade">
         </div>
-        <button type="button" class="btn btn-success" id="add_button" onclick="addStudent()">Add</button>
+        <button type="button" class="btn btn-success" id="add_button" onclick="add_student()">Add</button>
         <button type="button" class="btn btn-default" id="cancel_button">Cancel</button>
-        <button type="button" class="btn btn-info" id="get_data_from_server_button" onclick="getData()">Get Data From Server</button>
+        <button type="button" class="btn btn-info" id="get_data_from_server_button" onclick="get_data()">Get Data From Server</button>
     </div>
     <div class="student-list-container col-sm-12 col-md-8">
         <table class="student-list table">
@@ -60,6 +60,22 @@
             <tbody class="studentTB">
             </tbody>
         </table>
+    </div>
+    <!--Error Modal-->
+    <div id="errorModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p class="modal-title">ERROR!</p>
+                </div>
+                <div class="modal-body">
+                    <p id="modal_message"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </body>
