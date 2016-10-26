@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="sgt_app">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular SGT</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <meta name="viewport" content="initial-scale=1, user-scalable=no">
+</head>
+<body ng-controller="studentController as sc">
+<div class="container">
+    <div class="page-header">
+        <!-- only show this element when the isnt on mobile -->
+        <h1 class="hidden-xs hidden-sm">Student Grade Table
+            <small class="col-md-3 pull-right">Grade Average : <span class="avgGrade label label-default ">{{sc.calculate_average()}}</span>
+            </small>
+        </h1>
+        <!-- only show this element when the user gets to a mobile version -->
+        <h3 class="hidden-md hidden-lg"><strong>Student Grade Table</strong>
+            <small class="col-sm-2 pull-right">Grade Average : <span class="avgGrade label label-default ">{{sc.calculate_average()}}</span>
+            </small>
+        </h3>
+    </div>
+    <div class="student-add-form col-sm-12 col-md-3 pull-right">
+        <h4>Add Student</h4>
+        <div class="form-group input-group">
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-user"></span>
+            </span>
+            <input type="text" class="form-control" name="studentName" ng-model="sc.student.name" placeholder="Student Name">
+        </div>
+        <div class="form-group input-group">
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-list-alt"></span>
+            </span>
+            <input type="text" class="form-control" name="course" ng-model="sc.student.course" placeholder="Student Course">
+        </div>
+        <div class="form-group input-group">
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-education"></span>
+            </span>
+            <input type="text" class="form-control" name="studentGrade" ng-model="sc.student.grade"
+                   placeholder="Student Grade">
+        </div>
+        <button type="button" class="btn btn-success" ng-click="sc.addclicked()">Add</button>
+        <button type="button" class="btn btn-default">Cancel</button>
+        <button type="button" class="btn btn-info" ng-click="sc.get_student_data()">Get Data From Server</button>
+    </div>
+    <div class="student-list-container col-sm-12 col-md-8">
+        <table class="student-list table">
+            <thead>
+            <tr>
+                <th>Student Name</th>
+                <th>Student Course</th>
+                <th>Student Grade</th>
+                <th>Operations</th>
+            </tr>
+            </thead>
+            <tbody class="studentTB">
+            <tr>
+                <td>{{sc.student.name}}</td>
+                <td>{{sc.student.course}}</td>
+                <td>{{sc.student.grade}}</td>
+            </tr>
+            <tr ng-repeat="student in sc.student_array">
+                <td>{{student.name}}</td>
+                <td>{{student.course}}</td>
+                <td>{{student.grade}}</td>
+                <td>
+                    <button class="btn btn-danger" ng-click="sc.remove_student($index)">Delete</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="errorModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p class="modal-title">ERROR!</p>
+                </div>
+                <div class="modal-body">
+                    <p id="modal_message"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var app = angular.module('sgt_app',[]);
+    app.controller('studentController',function($scope){
+        this.student = {};
+        this.student_array = [];
+        this.addclicked = function(){
+            this.addstudent(this.student);
+            this.send_student_data();
+            this.clearinput();
+        };
+        this.clearinput = function(){
+            this.student = {};
+        };
+        this.addstudent = function(object) {
+            this.student_array.push(object);
+        };
+        this.remove_student = function($index){
+            this.delete_student_data($index);
+            this.student_array.splice($index, 1);
+        };
+        this.calculate_average = function (){
+            if(this.student_array.length == 0){
+                return 0;
+            }
+            var total = null;
+            for(var i = 0; i<= this.student_array.length-1; i++){
+                total += this.student_array[i].grade;
+            }
+            total /= this.student_array.length;
+            return Math.round(total);
+        };
+        this.send_student_data = function (){
+            // var key = {'api_key': 'lN3gVYfP6x'};
+            console.log('loading....');
+            var self = this;
+            $.ajax({
+                dataType: 'json',
+                method: 'post',
+                url: 'http://s-apis.learningfuze.com/sgt/create',
+                data: {
+                    'api_key': 'lN3gVYfP6x',
+                    'name': self.student_array[self.student_array.length - 1].name,
+                    'course': self.student_array[self.student_array.length - 1].course,
+                    'grade': self.student_array[self.student_array.length - 1].grade
+                },
+                success: function (result) {
+                    console.log('AJAX Success function called, with the following result:', result);
+                    console.log(self.student_array);
+//                global_result = result;
+//                console.log('server student id is: ' + result.new_id);
+//                student_object.id = result.new_id;
+                },
+                error: function (result) {
+                    display_error('The server could not process your request: ' + result);
+                }
+            });
+        };
+        this.get_student_data = function(){
+            var self = this;
+            $.ajax({
+                dataType: 'json',
+                method: 'post',
+                url: 'http://s-apis.learningfuze.com/sgt/get',
+                data: {
+                    'api_key': 'lN3gVYfP6x'
+                },
+                success: function (result) {
+                    console.log('AJAX Success function called, with the following result:', result);
+                    $scope.$apply(function(){
+                        for (i = 0; i < result.data.length; i++) {
+                            self.addstudent(result.data[i]);
+                        }
+                    });
+                    console.log(self.student_array);
+                    self.calculate_average();
+            },
+                error: function (result) {
+                    display_error('The server could not process your request: ' + result);
+                }
+            });
+        };
+        this.delete_student_data = function(student_id){
+            var self = this;
+            $.ajax({
+                dataType: 'json',
+                method: 'post',
+                url: 'http://s-apis.learningfuze.com/sgt/delete',
+                data: {
+                    'api_key': 'lN3gVYfP6x',
+                    'student_id': self.student_array[student_id].id
+                },
+                success: function (result) {
+                    console.log('AJAX Success function called, with the following result:', result);
+                },
+                error: function (result) {
+                    display_error('The server could not process your request: ' + result);
+                }
+            });
+        };
+        this.get_student_data();
+    });
+
+</script>
+</body>
+</html>
