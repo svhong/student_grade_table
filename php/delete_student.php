@@ -9,9 +9,10 @@ if (isset($_POST['ID'])){
     if ($result && mysqli_affected_rows($conn) == 1){
         $response = [
             'success' => true,
-            'message' => 'Student Successfully Deleted'
+            'message' => 'Student successfully deleted!'
         ];
-    } else {$response['message'][] = 'There was an error';
+    } else {
+        $response['message'][] = 'There was an error';
     };
     print(json_encode($response));
 }
