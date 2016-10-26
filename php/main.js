@@ -7,12 +7,12 @@ function get_data(){
         method: 'POST',
         dataType: 'json',
         success: function(response) {
+            console.log('this is the initial get data response', response);
             var total = 0;
-            for (var i = response.data.length-1; i >= 0; i--) {
+            for (var i = 0; i < response.data.length; i++) {
                 add_student_to_dom(response.data[i]);
-                total += parseInt(response.data[i]['Grade']);
+
             }
-            show_grade_average(Math.round(total/response.data.length));
         }
     });
 }
