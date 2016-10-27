@@ -1,2 +1,5 @@
 .DS_Store
+.idea
+README.md
 php/mysqli_connect.php
+
